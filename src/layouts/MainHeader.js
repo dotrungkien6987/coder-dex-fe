@@ -18,7 +18,9 @@ import PetsIcon from '@mui/icons-material/Pets';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { resetState } from '../features/pokemons/pokemonSlice';
 
 const pages = [
     ['Home', PetsIcon, grey[500], '/'],
@@ -56,14 +58,16 @@ const styles = {
 
 export const MainHeader = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+const dispatch = useDispatch();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-
+    const navigate = useNavigate();
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+        dispatch(resetState());
+        navigate(`/`);
     };
 
 
@@ -137,10 +141,10 @@ export const MainHeader = () => {
                                 return (
                                     <Button
                                         key={page}
-                                        component={Link}
-                                        to={page[3] || '#'}
+                                        // component={Link}
+                                        // to={page[3] || '#'}
                                         onClick={handleCloseNavMenu}
-                                        href="#"
+                                        // href="#"
                                         sx={{
                                             ...styles.iconMd,
                                             backgroundColor: page[0] === 'Pokédex' ? page[2] : null,
